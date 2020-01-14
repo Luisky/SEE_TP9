@@ -17,19 +17,17 @@
 #include <linux/kprobes.h>
 
 /*
- * Jumper probe for _do_fork.
+ * Jumper probe for do_sys_open.
  * Mirror principle enables access to arguments of the probed routine
  * from the probe handler.
  */
 
-/* Proxy routine having the same arguments as actual _do_fork() routine */
-static long j_do_fork(unsigned long clone_flags, unsigned long stack_start,
-                      unsigned long stack_size, int __user *parent_tidptr,
-                      int __user *child_tidptr, unsigned long tls)
+/* Proxy routine having the same arguments as actual do_sys_open() routine */
+static long j_do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
 {
-    pr_info("jprobe: clone_flags = 0x%lx, stack_start = 0x%lx "
-            "stack_size = 0x%lx\n",
-            clone_flags, stack_start, stack_size);
+    pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
+            "mode = 0x%x, filename = %s\n",
+            dfd, flags, mode, filename);
 
     /* Always end with a call to jprobe_return(). */
     jprobe_return();
@@ -37,15 +35,17 @@ static long j_do_fork(unsigned long clone_flags, unsigned long stack_start,
 }
 
 static struct jprobe my_jprobe = {
-    .entry = j_do_fork,
+    .entry = j_do_sys_open,
     .kp = {
-        .symbol_name = "_do_fork",
+        .symbol_name = "do_sys_open",
     },
 };
 
 static int __init jprobe_init(void)
 {
     int ret;
+
+    printk("is it crashing now ?\n");
 
     ret = register_jprobe(&my_jprobe);
     if (ret < 0)

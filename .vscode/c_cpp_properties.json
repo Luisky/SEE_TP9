@@ -5,9 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/lib/gcc/x86_64-linux-gnu/9/include",
-                "/usr/src/linux-headers-5.3.0-26-generic/include/",
-                "/usr/src/linux-headers-5.3.0-26-generic/arch/x86/include/",
-                "/usr/src/linux-headers-5.3.0-26-generic/arch/x86/include/generated/"
+                "/usr/src/linux-headers-4.13.0-21-generic/include/",
+                "/usr/src/linux-headers-4.13.0-21-generic/arch/x86/include/",
+                "/usr/src/linux-headers-4.13.0-21-generic/arch/x86/include/generated/"
             ],
             "defines": [
                 "__KERNEL__",
@@ -21,9 +21,9 @@
                 "path": [
                     "${workspaceFolder}/**",
                     "/usr/lib/gcc/x86_64-linux-gnu/9/include",
-                    "/usr/src/linux-headers-5.3.0-26-generic/include/",
-                    "/usr/src/linux-headers-5.3.0-26-generic/arch/x86/include/",
-                    "/usr/src/linux-headers-5.3.0-26-generic/arch/x86/include/generated/"
+                    "/usr/src/linux-headers-4.13.0-21-generic/include/",
+                    "/usr/src/linux-headers-4.13.0-21-generic/arch/x86/include/",
+                    "/usr/src/linux-headers-4.13.0-21-generic/arch/x86/include/generated/"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
