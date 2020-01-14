@@ -23,7 +23,7 @@
  */
 
 /* Proxy routine having the same arguments as actual do_sys_open() routine */
-static long j_do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
+long j_do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
 {
     pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
             "mode = 0x%x, filename = %s\n",
@@ -64,6 +64,6 @@ static void __exit jprobe_exit(void)
     pr_info("jprobe at %p unregistered\n", my_jprobe.kp.addr);
 }
 
-module_init(jprobe_init);
-module_exit(jprobe_exit);
+module_init(jprobe_init)
+module_exit(jprobe_exit)
 MODULE_LICENSE("GPL");
