@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "module.h": "c",
+        "kprobes.h": "c",
+        "ftrace.h": "c",
+        "kallsyms.h": "c",
+        "mm.h": "c",
+        "pgtable.h": "c",
+        "pgtable_64.h": "c",
+        "fixmap.h": "c",
+        "acpi.h": "c",
+        "realmode.h": "c",
+        "io.h": "c"
+    }
+}
