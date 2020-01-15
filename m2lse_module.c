@@ -23,15 +23,12 @@
  * from the probe handler.
  */
 
+static struct filename *(*getname_p)(const char __user *);
+
 /* Proxy routine having the same arguments as actual do_sys_open() routine */
 long j_do_sys_open(int dfd, const char __user *filename, int flags,
 		   umode_t mode)
 {
-	static struct filename *(*getname_p)(const char __user *);
-
-	getname_p = (struct filename * (*)(const char __user *))
-		kallsyms_lookup_name("getname");
-
 	struct filename *file_n;
 
 	// this is impossible since : http://linux-kernel.2935.n7.nabble.com/PATCH-vfs-unexport-the-getname-symbol-td766022.html
@@ -57,6 +54,9 @@ static struct jprobe my_jprobe = {
 static int __init jprobe_init(void)
 {
 	int ret;
+
+	getname_p = (struct filename * (*)(const char __user *))
+		kallsyms_lookup_name("getname");
 
 	ret = register_jprobe(&my_jprobe);
 	if (ret < 0) {
