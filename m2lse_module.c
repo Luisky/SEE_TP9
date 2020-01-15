@@ -46,8 +46,6 @@ static int __init jprobe_init(void)
 {
 	int ret;
 
-	printk("is it crashing now ?\n");
-
 	ret = register_jprobe(&my_jprobe);
 	if (ret < 0) {
 		pr_err("register_jprobe failed, returned %d\n", ret);
