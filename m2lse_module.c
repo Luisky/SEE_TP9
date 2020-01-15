@@ -30,6 +30,8 @@ long j_do_sys_open(int dfd, const char __user *filename, int flags,
 		"mode = 0x%x\n",
 		dfd, flags, mode);
 
+	printk("opening %s\n", filename);
+
 	/* Always end with a call to jprobe_return(). */
 	jprobe_return();
 	return 0;
