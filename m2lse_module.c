@@ -23,13 +23,16 @@
  * from the probe handler.
  */
 
+static struct filename *(*getname_p)(const char __user *);
+
+static int   file_or_part = 0;
+static char *path_str	  = "/home/luisky/.bashrc";
+
 module_param(file_or_part, int, 0);
 MODULE_PARM_DESC(file_or_part, "An int to choose if we trace a file or a part");
 
 module_param(path_str, charp, 0);
 MODULE_PARM_DESC(path_str, "A String for the path");
-
-static struct filename *(*getname_p)(const char __user *);
 
 /* Proxy routine having the same arguments as actual do_sys_open() routine */
 long j_do_sys_open(int dfd, const char __user *filename, int flags,
