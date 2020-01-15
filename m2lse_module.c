@@ -26,11 +26,13 @@
 long j_do_sys_open(int dfd, const char __user *filename, int flags,
 		   umode_t mode)
 {
-	pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
-		"mode = 0x%x\n",
-		dfd, flags, mode);
+	struct filename *file_n;
 
-	printk("opening %s\n", filename);
+	file_n = getname(filename);
+
+	pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
+		"mode = 0x%x\n filename = %s\n",
+		dfd, flags, mode, file_n->name);
 
 	/* Always end with a call to jprobe_return(). */
 	jprobe_return();
