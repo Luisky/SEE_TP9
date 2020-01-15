@@ -23,15 +23,16 @@
  */
 
 /* Proxy routine having the same arguments as actual do_sys_open() routine */
-long j_do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
+long j_do_sys_open(int dfd, const char __user *filename, int flags,
+		   umode_t mode)
 {
-    pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
-            "mode = 0x%x, filename = %s\n",
-            dfd, flags, mode, filename);
+	pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
+		"mode = 0x%x\n",
+		dfd, flags, mode);
 
-    /* Always end with a call to jprobe_return(). */
-    jprobe_return();
-    return 0;
+	/* Always end with a call to jprobe_return(). */
+	jprobe_return();
+	return 0;
 }
 
 static struct jprobe my_jprobe = {
@@ -43,27 +44,24 @@ static struct jprobe my_jprobe = {
 
 static int __init jprobe_init(void)
 {
-    int ret;
+	int ret;
 
-    printk("is it crashing now ?\n");
+	printk("is it crashing now ?\n");
 
-    ret = register_jprobe(&my_jprobe);
-    if (ret < 0)
-    {
-        pr_err("register_jprobe failed, returned %d\n", ret);
-        return -1;
-    }
-    pr_info("Planted jprobe at %p, handler addr %p\n",
-            my_jprobe.kp.addr, my_jprobe.entry);
-    return 0;
+	ret = register_jprobe(&my_jprobe);
+	if (ret < 0) {
+		pr_err("register_jprobe failed, returned %d\n", ret);
+		return -1;
+	}
+	pr_info("Planted jprobe at %p, handler addr %p\n", my_jprobe.kp.addr,
+		my_jprobe.entry);
+	return 0;
 }
 
 static void __exit jprobe_exit(void)
 {
-    unregister_jprobe(&my_jprobe);
-    pr_info("jprobe at %p unregistered\n", my_jprobe.kp.addr);
+	unregister_jprobe(&my_jprobe);
+	pr_info("jprobe at %p unregistered\n", my_jprobe.kp.addr);
 }
 
-module_init(jprobe_init)
-module_exit(jprobe_exit)
-MODULE_LICENSE("GPL");
+module_init(jprobe_init) module_exit(jprobe_exit) MODULE_LICENSE("GPL");
