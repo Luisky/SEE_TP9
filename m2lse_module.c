@@ -15,6 +15,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/kprobes.h>
+#include <linux/fs.h>
 
 /*
  * Jumper probe for do_sys_open.
