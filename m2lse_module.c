@@ -23,6 +23,12 @@
  * from the probe handler.
  */
 
+module_param(file_or_part, int, 0);
+MODULE_PARM_DESC(file_or_part, "An int to choose if we trace a file or a part");
+
+module_param(path_str, charp, 0);
+MODULE_PARM_DESC(path_str, "A String for the path");
+
 static struct filename *(*getname_p)(const char __user *);
 
 /* Proxy routine having the same arguments as actual do_sys_open() routine */
@@ -54,6 +60,8 @@ static struct jprobe my_jprobe = {
 static int __init jprobe_init(void)
 {
 	int ret;
+
+	pr_info("file_or_part = %d, path_str = %s", file_or_part, path_str);
 
 	getname_p = (struct filename * (*)(const char __user *))
 		kallsyms_lookup_name("getname");
