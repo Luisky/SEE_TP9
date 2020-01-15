@@ -44,9 +44,15 @@ long j_do_sys_open(int dfd, const char __user *filename, int flags,
 	// https://forums.centos.org/viewtopic.php?t=49653
 	file_n = getname_p(filename);
 
-	pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
-		"mode = 0x%x filename = %s\n",
-		dfd, flags, mode, file_n->name);
+	if (file_n->name == NULL) {
+		pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
+			"mode = 0x%x\n",
+			dfd, flags, mode);
+	} else {
+		pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
+			"mode = 0x%x filename = %s\n",
+			dfd, flags, mode, file_n->name);
+	}
 
 	/* Always end with a call to jprobe_return(). */
 	jprobe_return();
