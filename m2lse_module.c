@@ -38,13 +38,12 @@ MODULE_PARM_DESC(path_str, "A String for the path");
 long j_do_sys_open(int dfd, const char __user *filename, int flags,
 		   umode_t mode)
 {
-	struct filename *file_n;
+	struct filename *file_n = NULL;
 
 	// this is impossible since : http://linux-kernel.2935.n7.nabble.com/PATCH-vfs-unexport-the-getname-symbol-td766022.html
 	// https://forums.centos.org/viewtopic.php?t=49653
 	file_n = getname_p(filename);
-
-	if (file_n->name == NULL) {
+	if (IS_ERR(file_n)) {
 		pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
 			"mode = 0x%x\n",
 			dfd, flags, mode);
