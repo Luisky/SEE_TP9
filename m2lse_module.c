@@ -27,9 +27,16 @@
 long j_do_sys_open(int dfd, const char __user *filename, int flags,
 		   umode_t mode)
 {
+	static struct filename *(*getname_p)(const char __user *);
+
+	getname_p = (struct filename * (*)(const char __user *))
+		kallsyms_lookup_name("getname");
+
 	struct filename *file_n;
 
-	file_n = getname(filename);
+	// this is impossible since : http://linux-kernel.2935.n7.nabble.com/PATCH-vfs-unexport-the-getname-symbol-td766022.html
+	// https://forums.centos.org/viewtopic.php?t=49653
+	file_n = getname_p(filename);
 
 	pr_info("jprobe: dfd = 0x%x, flags = 0x%x "
 		"mode = 0x%x\n filename = %s\n",
